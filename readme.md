@@ -8,14 +8,23 @@ A simple shopping list app that is based on the electron platform for mac, windo
 
 <p align="center">
 <img src="screenshots/before.png" height = "300" width="450">
+<br/>
 Main Screen with List
-<br/>
+</p>
+<br/><br/>
+<p align="center">
 <img src="screenshots/additem.png" height= "300" width="450">
-Add Item screen
 <br/>
+Add Item screen
+</p>
+<br/><br/>
+<p align="center">
 <img src="screenshots/after.png" height= "300" width="450">
+<br/>
 Main Screen after items added
 </p>
+<br/>
+<br/>
 
 #### App ShortCuts
 
