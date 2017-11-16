@@ -2,14 +2,14 @@ const electron = require('electron');
 const url = require('url');
 const path = require('path');
 
-const {app, BrowserWindow, Menu} = electron;
+const {app, BrowserWindow, Menu, ipcMain} = electron;
+
+let mainWindow;
+let addWindow;
 
 var fns = {createAddWindow: createAddWindow};
 const mainMenuTemplate = require('./main/menu')(fns);
 
-
-let mainWindow;
-let addWindow;
 
 //Listen for app to be ready
 app.on('ready', () => {
@@ -57,4 +57,10 @@ function createAddWindow() {
     });
 }
 
-module.exports.createAddWindow = createAddWindow;
+//Catch add item
+ipcMain.on('item: add', (e, item)=> {
+    mainWindow.webContents.send('item: add',item);
+    addWindow.close();
+});
+
+

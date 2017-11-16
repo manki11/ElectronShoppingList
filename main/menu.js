@@ -18,7 +18,10 @@ module.exports = function (fns) {
                         fns.createAddWindow();
                     }
                 }, {
-                    label: 'Clear Items'
+                    label: 'Clear Items',
+                    click: (item, window) => {
+                        window.webContents.send('item: clear');
+                    }
                 }, {
                     type: 'separator'
                 }, {
