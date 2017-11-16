@@ -1,11 +1,15 @@
 const electron = require('electron');
 const url = require('url');
 const path = require('path');
-const mainMenuTemplate= require('./main/menu');
 
 const {app, BrowserWindow, Menu} = electron;
 
+var fns = {createAddWindow: createAddWindow};
+const mainMenuTemplate = require('./main/menu')(fns);
+
+
 let mainWindow;
+let addWindow;
 
 //Listen for app to be ready
 app.on('ready', () => {
@@ -25,3 +29,22 @@ app.on('ready', () => {
     //Insert menu
     Menu.setApplicationMenu(mainMenu);
 });
+
+//Handle create add Window
+function createAddWindow() {
+    //Create new window
+    addWindow = new BrowserWindow({
+        width: 200,
+        height: 300,
+        title: 'Add Shopping List Item'
+    });
+
+    //Load html into window
+    addWindow.loadURL(url.format({
+        pathname: path.join(__dirname, 'renderer/addWindow.html'),
+        protocol: 'file:',
+        slashes: true
+    }));
+}
+
+module.exports.createAddWindow= createAddWindow;
