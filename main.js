@@ -1,45 +1,26 @@
-const electron= require('electron');
-const url= require('url');
-const path= require('path');
+const electron = require('electron');
+const url = require('url');
+const path = require('path');
+const mainMenuTemplate= require('./main/menu');
 
-const {app, BrowserWindow, Menu}= electron;
+const {app, BrowserWindow, Menu} = electron;
 
 let mainWindow;
-
-//Create menu template
-let mainMenuTemplate =[
-    {
-        label:'Electron',
-        submenu: [
-            {
-                label: 'About',
-                click: () => {
-                    console.log('About Clicked');
-                }
-            }, {
-                label: 'Quit',
-                click: () => {
-                    app.quit();
-                }
-            }
-        ]
-    }
-];
 
 //Listen for app to be ready
 app.on('ready', () => {
     //Create new window
-    mainWindow= new BrowserWindow();
+    mainWindow = new BrowserWindow();
 
     //Load html into window
     mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname,'mainWindow.html'),
-        protocol:'file:',
-        slashes:true
+        pathname: path.join(__dirname, 'renderer/mainWindow.html'),
+        protocol: 'file:',
+        slashes: true
     }));
 
     //Build menu from template
-    const mainMenu= Menu.buildFromTemplate(mainMenuTemplate);
+    const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
 
     //Insert menu
     Menu.setApplicationMenu(mainMenu);
