@@ -16,12 +16,14 @@ module.exports = function (fns) {
                     label: 'Add Items',
                     click: () => {
                         fns.createAddWindow();
-                    }
+                    },
+                    accelerator: process.platform === 'darwin' ? 'Command+A' : 'Ctrl+A'
                 }, {
                     label: 'Clear Items',
                     click: (item, window) => {
                         window.webContents.send('item: clear');
-                    }
+                    },
+                    accelerator: process.platform === 'darwin' ? 'Command+S' : 'Ctrl+S'
                 }, {
                     type: 'separator'
                 }, {
