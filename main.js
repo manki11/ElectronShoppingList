@@ -23,6 +23,11 @@ app.on('ready', () => {
         slashes: true
     }));
 
+    //Quit app when closed
+    mainWindow.on('closed', () => {
+        app.quit();
+    });
+
     //Build menu from template
     const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
 
@@ -34,8 +39,8 @@ app.on('ready', () => {
 function createAddWindow() {
     //Create new window
     addWindow = new BrowserWindow({
-        width: 200,
-        height: 300,
+        width: 300,
+        height: 200,
         title: 'Add Shopping List Item'
     });
 
@@ -45,6 +50,11 @@ function createAddWindow() {
         protocol: 'file:',
         slashes: true
     }));
+
+    //Garbage collection handle
+    addWindow.on('closed', () => {
+        addWindow = null;
+    });
 }
 
-module.exports.createAddWindow= createAddWindow;
+module.exports.createAddWindow = createAddWindow;
