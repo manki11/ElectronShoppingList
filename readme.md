@@ -6,11 +6,9 @@ A simple shopping list app that is based on the electron platform for mac, windo
 
 #### Project ScreenShots
 
-![Alt text](screenshots/before.png?raw=true)
-
-![Alt text](screenshots/additem.png?raw=true)
-
-![Alt text](screenshots/after.png?raw=true)
+<p align="center">
+<img src="screenshots/before.png" height = "300" width="450">&nbsp&nbsp&nbsp&nbsp<img src="screenshots/additem.png" height= "300" width="450">
+</p>
 
 
 #### Steps to run project ####
