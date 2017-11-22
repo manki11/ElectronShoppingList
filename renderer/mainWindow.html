@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Shopping-List</title>
-    <link type="text/css" rel="stylesheet" href="../node_modules/materialize-css/dist/css/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="../node_modules/materialize-css/dist/css/materialize.min.css"
+          media="screen,projection"/>
 
 </head>
 <body>
 <nav>
     <div class="nav-wrapper">
-       <a class="brand-logo center" style="font-weight: 300">Shopping List</a>
+        <a class="brand-logo center" style="font-weight: 300">Shopping List</a>
     </div>
 </nav>
 <ul></ul>
@@ -20,30 +21,61 @@
 
 <script>
     const electron = require('electron');
+    const fs = require("fs")
     const {ipcRenderer} = electron;
+    const filename = 'shopping-list'
 
-    const ul= document.querySelector('ul');
+    const ul = document.querySelector('ul');
 
-    ipcRenderer.on('item: add', (e, item)=> {
-        ul.className= 'collection';
-        const li= document.createElement('li');
-        const itemText= document.createTextNode(item);
+    ipcRenderer.on('item: add', (e, item) => {
+        addEntry(item)
+        fs.appendFile(filename, item +'\n')
+    });
+
+    function addEntry(item) {
+        ul.className = 'collection';
+        const li = document.createElement('li');
+        const itemText = document.createTextNode(item);
         li.appendChild(itemText);
-        li.className= 'collection-item';
+        li.className = 'collection-item';
         ul.appendChild(li);
+    }
+
+    ipcRenderer.on('item: clear', () => {
+        ul.innerHTML = '';
+        ul.className = '';
     });
 
-    ipcRenderer.on('item: clear', ()=> {
-        ul.innerHTML='';
-        ul.className='';
-    });
-
-    ul.addEventListener('dblclick', (e)=>{
+    ul.addEventListener('dblclick', (e) => {
         e.target.remove();
-        if(ul.children.length === 0){
-            ul.className='';
+        if (ul.children.length === 0) {
+            ul.className = '';
         }
-    })
+    });
+
+    function loadAndDisplayContacts() {
+        //Check if file exists
+        if (fs.existsSync(filename)) {
+            let data = fs.readFileSync(filename, 'utf8').split('\n')
+
+            data.forEach((item, index) => {
+                addEntry(item)
+            });
+
+            if (ul.children.length === 0) {
+                ul.className = '';
+            }
+
+        } else {
+            console.log("File Doesn\'t Exist. Creating new file.")
+            fs.writeFile(filename, '', (err) => {
+                if (err)
+                    console.log(err)
+            })
+        }
+    }
+
+    loadAndDisplayContacts()
 
 </script>
 </html>
