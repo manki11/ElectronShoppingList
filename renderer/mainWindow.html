@@ -28,7 +28,7 @@
     const ul = document.querySelector('ul');
 
     ipcRenderer.on('item: add', (e, item) => {
-        addEntry(item)
+        addEntry(item);
         fs.appendFile(filename, item +'\n')
     });
 
@@ -44,7 +44,19 @@
     ipcRenderer.on('item: clear', () => {
         ul.innerHTML = '';
         ul.className = '';
+        deleteFile();
     });
+
+    function deleteFile(){
+        fs.unlink(filename, (err) => {
+            if (err) {
+                alert("An error ocurred updating the file" + err.message);
+                console.log(err);
+                return;
+            }
+            console.log("File succesfully deleted");
+        });
+    }
 
     ul.addEventListener('dblclick', (e) => {
         e.target.remove();
@@ -59,7 +71,9 @@
             let data = fs.readFileSync(filename, 'utf8').split('\n')
 
             data.forEach((item, index) => {
-                addEntry(item)
+                if(item.length!==0){
+                    addEntry(item)
+                }
             });
 
             if (ul.children.length === 0) {
