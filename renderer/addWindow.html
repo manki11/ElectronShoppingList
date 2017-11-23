@@ -19,19 +19,6 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="../node_modules/materialize-css/dist/js/materialize.min.js"></script>
 
-<script>
-    const electron = require('electron');
-    const {ipcRenderer}= electron;
-
-    const form= document.querySelector('form');
-    form.addEventListener('submit', submitForm);
-    
-    function submitForm(e) {
-        e.preventDefault();
-        const item= document.querySelector('#item').value;
-
-        ipcRenderer.send('item: add', item);
-    }
-</script>
+<script src="addWindow.js" type="text/javascript"></script>
 </body>
 </html>
